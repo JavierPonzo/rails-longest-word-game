@@ -9,8 +9,7 @@ class GamesController < ApplicationController
   def score
     @answer = params[:answer]
     if validAttempt?(@answer)
-    url = "https://dictionary.lewagon.com/#{@answer}"
-    request = URI.open(url).read
+    request = "https://dictionary.lewagon.com/#{@answer}".read
     response = JSON.parse(request)
     response["found"] ? endGame(response) : @result = { score: 0, message: "You lost"}
     else
@@ -20,6 +19,7 @@ class GamesController < ApplicationController
 
   def validAttempt?(word)
     word.length <= 10
+    # word.chars.all? {|letter| word.count(letter) <= letters.count(letter)}
   end
 
   def endGame(word)
